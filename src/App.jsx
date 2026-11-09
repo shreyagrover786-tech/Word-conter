@@ -1,6 +1,8 @@
 import WordCounter from "./Components/WordCounter";
 
 function App() {
-return <WordCounter/>
-} 
+    return (
+        <WordCounter/>
+    );
+}
 export default App;

@@ -1,36 +1,40 @@
 import { useState } from "react";
+import {Container, Typography, TextField, Button} from "@mui/material";
+
 function WordCounter() {
     const [text, setText] = useState("");
 
     const words = text === "" ? 0 : text.trim().split(" ").length;
     const characters = text.length;
-    const sentences = text === "" ? 0 : text.split(".").length - 1;
+    const sentences = text === "" ? 0 : text.split(".").length;
     return (
-        <div style={{textAlign: "center", padding: "20px"}}>
-            <h1>Word Counter</h1>
-            <p>Instantly analyze your text for word count, character count, sentences, and paragraphs.</p>
-            <textarea
-            placeholder="Start typing or paste your text here..."
+        <Container maxWidth="sm" style={{textAlign: "center", marginTop: "50px"}}>
+            <Typography variant="h4" color="primary">
+                Word Counter
+            </Typography>
+            <Typography variant="body1" style={{margin: "10px 0 20px 0", color: "gray"}}>
+                Type your text below
+            </Typography>
+            <TextField
+            fullWidth
+            multiline
+            rows={5}
+            label="Enter your text here"
+            variant="outlined"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            style={{ width: "400px", height: "120px", padding: "10px"}}>
-            </textarea>
-            <div style={{ display: "flex", justifyContent: "center", gap: "40px", marginTop: "20px"}}>
-                <div>
-                    <p>Words</p>
-                    <h2>{words}</h2>
-                </div>
-                <div>
-                    <p>Characters</p>
-                    <h2>{characters}</h2>
-                </div>
-                <div>
-                    <p>Sentences</p>
-                    <h2>{sentences}</h2>
-                </div>
-            </div>
-            <button onClick={() => setText("")}>Clear</button>
-        </div>
+            />
+            <Typography variant="h6" style={{marginTop: "20px"}}>
+                Words: {words} | Characters: {characters} | Sentences: {sentences}
+            </Typography>
+            <Button
+            variant="contained"
+            color="error"
+            style={{marginTop: "20px"}}
+            onClick={() => setText("")}>
+                Clear
+            </Button>
+        </Container>
     );
-}
+    }
 export default WordCounter;
