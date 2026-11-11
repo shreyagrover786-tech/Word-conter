@@ -9,6 +9,21 @@ function WordCounter() {
     const sentences = text .trim() === "" ? 0 : text.split(/[.!?]+/).filter(s => s.trim() !== "").length;
     const paragraphs = text.split(/\n+/).filter(p => p.trim() !== "").length;
     const readTime = (words / 200).toFixed(1); 
+    let vowels = 0;
+    let consonents = 0;
+    for (let ch of text) {
+        if ("aeiouAEIOU".includes(ch)) {
+            vowels++;
+        } else if ((ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z")) {
+            consonents++;
+        }
+    }
+    let aCount = 0;
+    for (let ch of text) {
+        if (ch ==="a" || ch ==="A") {
+            aCount++;
+        }
+    }
     return (
         <Container maxWidth="sm" style={{textAlign: "center", marginTop: "50px"}}>
             <Typography variant="h4" color="primary">
@@ -50,7 +65,7 @@ function WordCounter() {
                 </Button>
             </div>
             <Typography variant="h6" style={{marginTop: "20px"}}>
-                Words: {words} | Characters: {characters} | Sentences: {sentences} | paragraphs: {paragraphs} | Reading Time: {readTime} min
+                Words: {words} | Characters: {characters} | Sentences: {sentences} | paragraphs: {paragraphs} | Reading Time: {readTime} min | Vowels: {vowels} | Consonents: {consonents} | 'a' Frequency: {aCount}
             </Typography>
             <Button
             variant="contained"
