@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
+import{BsEye, BsEyeSlash} from "react-icons/bs"
 import { ThemeContext } from "./ThemeContext.jsx";
 import {Container, Typography, TextField, Button} from "@mui/material";
 
 function WordCounter() {
     const [text, setText] = useState("");
     const {dark, toggleTheme} = useContext(ThemeContext);
+    const [showtext, setShowText] = useState(true);
 
     const words = text === "" ? 0 : text.trim().split(" ").length;
     const characters = text.length;
@@ -12,6 +14,7 @@ function WordCounter() {
     const paragraphs = text.split(/\n+/).filter(p => p.trim() !== "").length;
     const readTime = (words / 200).toFixed(1); 
     const reversed = text.split("").reverse().join("");
+    
 
     let vowels = 0;
     let consonents = 0;
@@ -44,12 +47,11 @@ function WordCounter() {
             </Typography>
             <TextField
             fullWidth
-            multiline
-            rows={5}
             label="Enter your text here"
             variant="outlined"
              value={text}
             onChange={(e) => setText(e.target.value)}
+            type={showtext ? "text" : "password"}
             sx={{
                 "& .MuiOutlinedInput-root": {
                     color: dark ? "white" : "black",
@@ -60,7 +62,12 @@ function WordCounter() {
                 },
             }}
             />
+            
             <div style={{marginTop: "15px", display: "flex", gap: "10px", justifyContent: "center"}}>
+                <Button variant="contained" sx={{backgroundColor: "black", color: "white"}} 
+                onClick={() => setShowText(!showtext)}>
+                    {showtext ? <BsEyeSlash/> : <BsEye/>}
+                </Button>
                 <Button
                 variant="contained"
                 color="primary"
