@@ -14,7 +14,13 @@ function WordCounter() {
     const paragraphs = text.split(/\n+/).filter(p => p.trim() !== "").length;
     const readTime = (words / 200).toFixed(1); 
     const reversed = text.split("").reverse().join("");
-    
+    const handleTitleCase = () => {
+        const newText = text.split(" ").map((word) => {
+            if(word.length === 0) return word;
+            return word[0].toUpperCase() + word.slice(1).toLowerCase();
+        }).join(" ");
+        setText(newText);
+    }
 
     let vowels = 0;
     let consonents = 0;
@@ -53,6 +59,10 @@ function WordCounter() {
             onChange={(e) => setText(e.target.value)}
             type={showtext ? "text" : "password"}
             sx={{
+                "& .MuiInputBase-input": {
+                    height: "100px",
+                    alignItems: "flex-start"
+                },
                 "& .MuiOutlinedInput-root": {
                     color: dark ? "white" : "black",
                     backgroundColor: dark ? "#333" : "white",
@@ -63,25 +73,30 @@ function WordCounter() {
             }}
             />
             
-            <div style={{marginTop: "15px", display: "flex", gap: "10px", justifyContent: "center"}}>
+            <div style={{marginTop: "15px", display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center"}}>
                 <Button variant="contained" sx={{backgroundColor: "black", color: "white"}} 
                 onClick={() => setShowText(!showtext)}>
                     {showtext ? <BsEyeSlash/> : <BsEye/>}
                 </Button>
                 <Button
                 variant="contained"
+                size="small"
                 color="primary"
                 onClick={() => setText(text.toUpperCase())}>
                     UPPERCASE
                 </Button>
                 <Button
                 variant="contained"
+                size="small"
                 color="secondary"
                 onClick={() => setText(text.toLowerCase())}>
                     lowercase
                 </Button>
                 <Button variant="contained" color="success" onClick={() => navigator.clipboard.writeText(text)}>
                     COPY
+                </Button>
+                <Button variant="contained" size="small" color="info" onClick={handleTitleCase}>
+                    TITLE CASE
                 </Button>
                 <Button 
                 variant="contained"
